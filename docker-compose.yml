@@ -6,6 +6,8 @@ services:
     command: python -m bot.main
     restart: unless-stopped
     env_file: .env
+    environment:
+      - EXPECTED_BOT_USERNAME=Reels2ActionBot
     depends_on:
       postgres:
         condition: service_healthy

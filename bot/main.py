@@ -115,6 +115,13 @@ async def main():
     db_pool = await get_db_pool()
     redis_pool = await get_redis_pool()
     
+    me = await bot.get_me()
+    expected = os.getenv("EXPECTED_BOT_USERNAME", "").lstrip("@").lower()
+    actual = (me.username or "").lower()
+    if expected and actual != expected:
+        raise RuntimeError(f"Telegram bot identity mismatch: expected @{expected}, got @{actual or 'no_username'}")
+    print(f"Telegram identity verified: @{me.username} ({me.id})", flush=True)
+
     dp.message.middleware(ServicesMiddleware(db_pool, redis_pool))
     dp.callback_query.middleware(ServicesMiddleware(db_pool))
     
