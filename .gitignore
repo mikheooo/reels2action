@@ -7,3 +7,9 @@ __pycache__/
 *.sqlite
 *.db
 temp/
+*.json.state
+*.key
+*.pem
+secrets/
+.env.*
+!.env.example
